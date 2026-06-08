@@ -21,15 +21,12 @@ import "./index.css";
 //Renderizado de la app, envuelta en BrowserRouter para manejar las rutas
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    {/*Añadimos el basename aquí para la configuración de GitHub Pages*/}
+    <BrowserRouter basename={import.meta.env.BASE_URL}> 
       <ToastProvider>
-
         <AuthProvider>
-
           <App />
-
         </AuthProvider>
-
       </ToastProvider>
     </BrowserRouter>
   </StrictMode>
