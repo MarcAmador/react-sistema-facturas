@@ -1,0 +1,177 @@
+
+
+.pagination .page-link {
+  border-radius: 50px !important;
+  margin: 0 3px;
+}
+
+.custom-toast {
+
+  position: fixed;
+
+  top: 30px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 9999;
+
+  min-width: 300px;
+
+  padding: 15px 25px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  font-weight: 500;
+
+  color: white;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.2);
+
+  animation:
+    slideDown 0.5s ease,
+    slideUp 0.5s ease 2.5s forwards;
+
+}
+
+.toast-success {
+
+  background-color: #198754;
+
+}
+
+.toast-error {
+
+  background-color: #dc3545;
+
+}
+
+@keyframes slideDown {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-100px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+
+  }
+
+}
+
+@keyframes slideUp {
+
+  from {
+
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+
+  }
+
+  to {
+
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-100px);
+
+  }
+
+}
+
+.invoice-paper {
+
+  background: white;
+
+  max-width: 850px;
+
+  margin: auto;
+
+  border-radius: 12px 12px 0 0;
+
+  overflow: visible;
+
+  filter: drop-shadow(0px -30px 80px rgba(0,0,0,.18));
+  
+}
+
+.invoice-header {
+
+  background:
+  linear-gradient(
+    135deg,
+    #0d6efd,
+    #0a58ca
+  );
+
+  color: white;
+
+  padding: 25px;
+
+}
+
+.invoice-body {
+
+  padding: 30px;
+
+}
+
+.invoice-footer {
+
+  background: #f8f9fa;
+
+  padding: 20px;
+
+  text-align: center;
+
+  color: #6c757d;
+
+  position: relative;
+
+}
+
+.invoice-cut {
+
+  height: 20px;
+
+  background:
+    linear-gradient(
+      -45deg,
+      transparent 10px,
+      white 0
+    ),
+    linear-gradient(
+      45deg,
+      transparent 10px,
+      white 0
+    );
+
+  background-size: 20px 20px;
+
+  background-repeat: repeat-x;
+
+  filter:
+    drop-shadow(
+      0 6px 6px
+      rgba(0,0,0,.15)
+    );
+
+}
