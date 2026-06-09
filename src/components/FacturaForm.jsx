@@ -16,42 +16,116 @@ function FacturaForm({
 }) {
 
   const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
-const validate = () => {
+  const validate = () => {
 
   const newErrors = {};
 
-  if (!titulo.trim()) {
+    if (!cliente.trim()) {
 
-    newErrors.titulo =
-      "El título es obligatorio";
+      newErrors.cliente = "El cliente es obligatorio";
 
-  } else if (titulo.trim().length < 5) {
+    }
 
-    newErrors.titulo =
-      "Debe tener al menos 5 caracteres";
+    if (!titulo.trim()) {
 
-  }
+      newErrors.titulo =
+        "El título es obligatorio";
 
-  if (!descripcion.trim()) {
+    } else if (titulo.trim().length < 5) {
 
-    newErrors.descripcion =
-      "La descripción es obligatoria";
+      newErrors.titulo =
+        "Debe tener al menos 5 caracteres";
 
-  } else if (
-    descripcion.trim().length < 10
-  ) {
+    }
 
-    newErrors.descripcion =
-      "Debe tener al menos 10 caracteres";
+    if (!descripcion.trim()) {
 
-  }
+      newErrors.descripcion =
+        "La descripción es obligatoria";
 
-  return newErrors;
+    } else if (
+      descripcion.trim().length < 10
+    ) {
 
-};
+      newErrors.descripcion =
+        "Debe tener al menos 10 caracteres";
+
+    }
+
+    return newErrors;
+
+  };
+
+  const validateField = (
+    field,
+    value
+  ) => {
+
+    let error = "";
+
+    switch (field) {
+
+      case "cliente":
+
+        if (!value.trim()) {
+
+          error =
+            "El cliente es obligatorio";
+
+        }
+
+        break;
+
+      case "titulo":
+
+        if (!value.trim()) {
+
+          error =
+            "El título es obligatorio";
+
+        } else if (
+          value.trim().length < 5
+        ) {
+
+          error =
+            "Debe tener al menos 5 caracteres";
+
+        }
+
+        break;
+
+      case "descripcion":
+
+        if (!value.trim()) {
+
+          error =
+            "La descripción es obligatoria";
+
+        } else if (
+          value.trim().length < 10
+        ) {
+
+          error =
+            "Debe tener al menos 10 caracteres";
+
+        }
+
+        break;
+
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [field]: error,
+    }));
+
+  };
 
   const handleSubmit = (e) => {
+
+    setSubmitted(true);
 
     const validationErrors =
       validate();
@@ -73,12 +147,15 @@ const validate = () => {
 
     onSubmit(e);
 
-};
+  };
 
   return (
     <form onSubmit={handleSubmit}>
 
-      {Object.keys(errors).length > 0 && (
+      {submitted &&
+      Object.keys(errors).some(
+        (key) => errors[key]
+      ) && (
 
         <div className="alert alert-danger">
 
@@ -106,15 +183,32 @@ const validate = () => {
 
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${
+              errors.cliente
+                ? "is-invalid"
+                : cliente.trim()
+                ? "is-valid"
+                : ""
+            }`}
             value={cliente}
-            onChange={(e) =>
+            onChange={(e) => {
+
               onClienteChange(
                 e.target.value
-              )
-            }
+              );
+
+              validateField(
+                "cliente",
+                e.target.value
+              );
+
+            }}
             placeholder="Nombre del cliente"
           />
+
+          <div className="invalid-feedback">
+            {errors.cliente}
+          </div>
 
         </div>
 
@@ -128,14 +222,23 @@ const validate = () => {
           className={`form-control ${
             errors.titulo
               ? "is-invalid"
-              : titulo.length >= 5
+              : titulo.trim().length >= 5
               ? "is-valid"
               : ""
           }`}
           value={titulo}
-          onChange={(e) =>
-            onTituloChange(e.target.value)
-          }
+          onChange={(e) => {
+
+            onTituloChange(
+              e.target.value
+            );
+
+            validateField(
+              "titulo",
+              e.target.value
+            );
+
+          }}
         />
 
         <div className="invalid-feedback">
@@ -150,20 +253,27 @@ const validate = () => {
         </label>
 
         <textarea
-          className={`form-control ${
-            errors.descripcion
-              ? "is-invalid"
-              : descripcion.length >= 10
-              ? "is-valid"
-              : ""
-          }`}
+        className={`form-control ${
+          errors.descripcion
+            ? "is-invalid"
+            : descripcion.trim().length >= 10
+            ? "is-valid"
+            : ""
+        }`}
           rows="4"
           value={descripcion}
-          onChange={(e) =>
+          onChange={(e) => {
+
             onDescripcionChange(
               e.target.value
-            )
-          }
+            );
+
+            validateField(
+              "descripcion",
+              e.target.value
+            );
+
+          }}
         />
 
     
