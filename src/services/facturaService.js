@@ -1,126 +1,18 @@
+// src/services/facturaService.js
 import api from "./api";
-
-//Datos ficticios
-const nombres = [
-  "Juan",
-  "María",
-  "Carlos",
-  "Ana",
-  "Luis",
-  "Sofía",
-  "José",
-  "Daniela",
-  "Miguel",
-  "Paola",
-  "Fernando",
-  "Andrea",
-  "Javier",
-  "Valeria",
-  "Ricardo",
-  "Camila",
-  "Alejandro",
-  "Patricia",
-  "Kevin",
-  "Gabriela"
-];
-
-const apellidos = [
-  "Pérez",
-  "López",
-  "García",
-  "Ramírez",
-  "Morales",
-  "Castillo",
-  "Rodríguez",
-  "Hernández",
-  "González",
-  "Cruz",
-  "Méndez",
-  "Santos",
-  "Ruiz",
-  "Vásquez",
-  "Flores",
-  "Martínez",
-  "Ortiz",
-  "Reyes",
-  "Chávez",
-  "Herrera"
-];
-
-const estados = [
-  "Pendiente",
-  "Pagada",
-  "Vencida",
-  "Anulada"
-];
-
-
-function transformarFactura(factura) {
-
-const indiceNombre =
-  (factura.id - 1) %
-  nombres.length;
-
-const ronda =
-  Math.floor(
-    (factura.id - 1) /
-    nombres.length
-  );
-
-const indiceApellido =
-  (
-    indiceNombre +
-    ronda
-  ) %
-  apellidos.length;
-
-  return {
-
-    ...factura,
-
-      cliente: `${
-
-        nombres[indiceNombre]
-
-      } ${
-
-        apellidos[indiceApellido]
-
-      }`,
-
-    estado:
-      estados[
-        factura.id %
-        estados.length
-      ]
-
-  };
-
-}
+// 1. Importamos la función transformadora desde utilidades
+import { transformarFactura } from "../utils/generadorClientes"; 
 
 export async function obtenerFacturas() {
-
-  const response =
-    await api.get("/posts");
-
-  const facturas =
-    response.data.map(
-      transformarFactura
-    );
-
-  return facturas;
-
+  const response = await api.get("/posts");
+  // Mapeamos el arreglo transformando cada elemento
+  return response.data.map(transformarFactura);
 }
 
 export async function obtenerFacturaPorId(id) {
-
-  const response =
-    await api.get(`/posts/${id}`);
-
-  return transformarFactura(
-    response.data
-  );
-
+  const response = await api.get(`/posts/${id}`);
+  // Transformamos el objeto único recibido
+  return transformarFactura(response.data);
 }
 
 export async function crearFactura(data) {
