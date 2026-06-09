@@ -175,3 +175,33 @@
     );
 
 }
+
+/* ---- AJUSTES GLOBALES PARA MÓVILES ---- */
+@media (max-width: 767.98px) {
+  
+  /* 1. Reduce el tamaño de fuente general del sistema */
+  body {
+    font-size: 0.875rem; /* ~14px en lugar de los 16px por defecto */
+  }
+
+  /* 2. Hace que los títulos sean un poco más pequeños */
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  
+  /* 3. Reduce el padding de todos los botones para que no ocupen tanto espacio */
+  .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* 4. Hace que las celdas de la tabla sean más estrechas (compactas) */
+  .table td, .table th {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  /* 5. Asegura que el buscador no se desborde */
+  .form-control {
+    font-size: 0.875rem;
+  }
+}
