@@ -11,7 +11,7 @@ function PrivateRoute({ children }) {
 
   //Si no hay usuario autenticado, redirigir a la página de login
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace/>;
   }
 //Si hay usuario logueado, renderizar los componentes
   return children;
