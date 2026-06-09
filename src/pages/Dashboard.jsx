@@ -179,7 +179,7 @@ function Dashboard() {
                 <p className="small text-muted mb-4">Gestione sus comprobantes de forma inmediata con los siguientes accesos directos.</p>
               </div>
               <div className="d-flex flex-column gap-2">
-                <Link to="/nueva-factura" className="btn btn-success py-2 fw-semibold">
+                <Link to="/facturas/nueva" className="btn btn-success py-2 fw-semibold">
                   <i className="bi bi-plus-circle me-2"></i> Emitir Nueva Factura
                 </Link>
                 <Link to="/facturas" className="btn btn-outline-primary py-2 fw-semibold">

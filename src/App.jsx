@@ -63,7 +63,7 @@ function App() {
           }
         />
         <Route
-        path="/nueva-factura"
+        path="/facturas/nueva"
         element={
           <PrivateRoute>
             <NuevaFactura />
