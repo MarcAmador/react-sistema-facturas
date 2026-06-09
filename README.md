@@ -6,6 +6,14 @@ El proyecto implementa autenticación simulada, dashboard administrativo, listad
 
 ---
 
+# Demo
+
+Proyecto desplegado en GitHub Pages:
+
+https://marcamador.github.io/react-sistema-facturas/
+
+---
+
 # Tabla de Contenidos
 
 * Descripción del Proyecto
@@ -124,6 +132,22 @@ Debido a que JSONPlaceholder no almacena cambios reales en su servidor, se imple
 
 ---
 
+# Funcionalidades Destacadas
+
+- Dashboard dinámico.
+- CRUD completo de facturas.
+- Factura visual tipo documento.
+- Vista previa en tiempo real.
+- Toasts personalizados.
+- Modal de confirmación.
+- Búsqueda y filtros combinados.
+- Ordenamiento por columnas.
+- Paginación.
+- Responsive Design.
+- Manejo global de estado.
+
+---
+
 # Capturas de Pantalla
 
 ## Login
@@ -131,10 +155,6 @@ Debido a que JSONPlaceholder no almacena cambios reales en su servidor, se imple
 <p align="center">
   <img src="./screenshots/login.png" alt="Facturas" width="900">
 </p>
-
-```text
-screenshots/login.png
-```
 
 ---
 
@@ -144,10 +164,6 @@ screenshots/login.png
   <img src="./screenshots/dashboard.png" alt="Facturas" width="900">
 </p>
 
-```text
-screenshots/dashboard.png
-```
-
 ---
 
 ## Listado de Facturas
@@ -155,10 +171,6 @@ screenshots/dashboard.png
 <p align="center">
   <img src="./screenshots/lfacturas.png" alt="Facturas" width="900">
 </p>
-
-```text
-screenshots/lfacturas.png
-```
 
 ---
 
@@ -174,10 +186,6 @@ screenshots/lfacturas.png
   <img src="./screenshots/nueva-factura2.png" alt="Facturas" width="900">
 </p>
 
-```text
-screenshots/nueva-factura.png
-```
-
 ---
 
 ## Editar Factura
@@ -185,10 +193,6 @@ screenshots/nueva-factura.png
 <p align="center">
   <img src="./screenshots/editar-factura.png" alt="Facturas" width="900">
 </p>
-
-```text
-screenshots/editar-factura.png
-```
 
 ---
 
@@ -198,17 +202,11 @@ screenshots/editar-factura.png
   <img src="./screenshots/detalle-factura.png" alt="Facturas" width="900">
 </p>
 
-```text
-screenshots/detalle-factura.png
-```
-
 ---
 
 # Arquitectura del Proyecto
 
 La aplicación está organizada siguiendo una arquitectura basada en componentes reutilizables y separación de responsabilidades.
-
-## Estructura General
 
 ## Estructura del Proyecto
 
@@ -365,6 +363,26 @@ useFacturas()
 ```
 
 Para centralizar el acceso al estado global de facturas.
+
+## Persistencia Simulada
+
+JSONPlaceholder no almacena cambios reales en el servidor.
+
+Para cumplir los requisitos CRUD del proyecto, se implementó un FacturaContext que mantiene una copia local de los datos y permite reflejar inmediatamente:
+
+- Creaciones
+- Ediciones
+- Eliminaciones
+
+sin depender de persistencia real en la API.
+
+> Nota:
+>
+> JSONPlaceholder simula correctamente las operaciones POST, PUT y DELETE,
+> pero no persiste cambios reales.
+>
+> Para reflejar las modificaciones en la interfaz se implementó un estado
+> local mediante Context API.
 
 ---
 
@@ -537,7 +555,7 @@ Respuesta:
 ## Clonar repositorio
 
 ```bash
-git clone URL_DEL_REPOSITORIO
+git clone https://github.com/MarcAmador/react-sistema-facturas
 ```
 
 ---
@@ -545,7 +563,7 @@ git clone URL_DEL_REPOSITORIO
 ## Ingresar al proyecto
 
 ```bash
-cd nombre-del-proyecto
+cd react-dashFacturas
 ```
 
 ---
@@ -638,7 +656,7 @@ admin
 Contraseña:
 
 ```text
-1234
+admin123
 ```
 
 ---
@@ -686,6 +704,6 @@ Se utilizaron:
 
 # Autor
 
-**Marc**
+**Marlon Ronaldo Amador**
 
-Proyecto académico desarrollado como práctica de React para la gestión de facturas utilizando una API REST simulada y arquitectura basada en componentes.
+Proyecto desarrollado como práctica de React para la gestión de facturas utilizando una API REST simulada y arquitectura basada en componentes.
