@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 
 import DeleteModal from "../components/DeleteModal";
-import { obtenerFacturaPorId } from "../services/facturaService";
+import { useFacturas } from "../hooks/useFacturas";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Toast from "../components/Toasts";
 import { useToast } from "../context/ToastContext";
@@ -16,17 +16,22 @@ function FacturaDetalle() {
 
   const [factura, setFactura] = useState(null);
 
+  const { facturas, eliminarFactura } = useFacturas();
+
   const [loading, setLoading] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
-
-  const [toast, setToast] = useState("");
 
   const { showToast } = useToast();
 
   const navigate = useNavigate();
 
-  const handleDelete = () => {
+
+  const handleDelete = async () => {
+
+    await eliminarFactura(
+      factura.id
+    );
 
     showToast(
       "Factura eliminada correctamente",
@@ -34,40 +39,31 @@ function FacturaDetalle() {
     );
 
     setShowModal(false);
+
     setTimeout(() => {
-      navigate(`/facturas`);
+
+      navigate("/facturas");
+
     }, 1000);
 
   };
 
   useEffect(() => {
 
-    if (!toast) return;
+    const facturaEncontrada =
+      facturas.find(
+        (f) => f.id === Number(id)
+      );
 
-    const timer = setTimeout(() => {
+    if (facturaEncontrada) {
 
-      setToast("");
-
-    }, 3000);
-
-    return () => clearTimeout(timer);
-
-  }, [toast]);
-
-  useEffect(() => {
-
-    async function cargarFactura() {
-
-      const datos = await obtenerFacturaPorId(id);
-
-      setFactura(datos);
+      setFactura(facturaEncontrada);
 
       setLoading(false);
+
     }
 
-    cargarFactura();
-
-  }, [id]);
+  }, [id, facturas]);
 
   if (loading) {
     return (

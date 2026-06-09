@@ -9,13 +9,15 @@ import Breadcrumb from "../components/Breadcrumb";
 import { useFacturas } from "../hooks/useFacturas";
 
 import FacturaTable from "../components/FacturaTable";
+import { useToast } from "../context/ToastContext";
 import SearchBar from "../components/SearchBar";
 
 function Facturas() {
 
-  const { facturas, loading, error, } = useFacturas();
+  const { facturas, loading, error, eliminarFactura} = useFacturas();
 
   const [showModal, setShowModal] = useState(false);
+  const { showToast } = useToast();
 
   const [facturaSeleccionada, setFacturaSeleccionada] = useState(null);
 
@@ -128,11 +130,15 @@ function Facturas() {
 
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
 
-    console.log(
-      "Factura eliminada:",
-      facturaSeleccionada
+    await eliminarFactura(
+      facturaSeleccionada.id
+    );
+
+    showToast(
+      "Factura eliminada",
+      "success"
     );
 
     setShowModal(false);

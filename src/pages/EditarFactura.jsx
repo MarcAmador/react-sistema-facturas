@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 
+import { useFacturas } from "../hooks/useFacturas";
 import FacturaForm from "../components/FacturaForm";
-import { obtenerFacturaPorId } from "../services/facturaService";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 function EditarFactura() {
@@ -18,40 +18,76 @@ function EditarFactura() {
 
   const [loading, setLoading] = useState(true);
 
+  const [cliente, setCliente] = useState("");
+  const [estado, setEstado] = useState("Pendiente");
+
   const { showToast } = useToast();
+
+  const {facturas, editarFactura,} = useFacturas();
+
   const navigate = useNavigate();
 
   useEffect(() => {
 
-    async function cargarFactura() {
+    const factura =
+      facturas.find(
+        (f) =>
+          f.id === Number(id)
+      );
 
-      const factura = await obtenerFacturaPorId(id);
+      if (factura) {
 
-      setTitulo(factura.title);
-      setDescripcion(factura.body);
+        setCliente(
+          factura.cliente || ""
+        );
 
-      setLoading(false);
-    }
+        setEstado(
+          factura.estado || "Pendiente"
+        );
 
-    cargarFactura();
+        setTitulo(
+          factura.title
+        );
 
-  }, [id]);
+        setDescripcion(
+          factura.body
+        );
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+        setLoading(false);
 
-  console.log({
-    id,
-    titulo,
-    descripcion,
-  });
+      }
 
-  showToast("Factura actualizada correctamente", "success");
+    }, [id, facturas]);
 
-  setTimeout(() => {
-    navigate(`/facturas/${id}`);
-  }, 1000);
-};
+  const handleSubmit =
+    async (e) => {
+
+      e.preventDefault();
+
+      await editarFactura(
+        id,
+        {
+          cliente,
+          estado,
+          title: titulo,
+          body: descripcion,
+        }
+      );
+
+      showToast(
+        "Factura actualizada correctamente",
+        "success"
+      );
+
+      setTimeout(() => {
+
+        navigate(
+          `/facturas/${id}`
+        );
+
+      }, 1000);
+
+  };
 
   if (loading) {
     return (
@@ -95,8 +131,12 @@ const handleSubmit = (e) => {
         <h1>Editar Factura</h1>
 
         <FacturaForm
+          cliente={cliente}
+          estado={estado}
           titulo={titulo}
           descripcion={descripcion}
+          onClienteChange={setCliente}
+          onEstadoChange={setEstado}
           onTituloChange={setTitulo}
           onDescripcionChange={setDescripcion}
           onSubmit={handleSubmit}

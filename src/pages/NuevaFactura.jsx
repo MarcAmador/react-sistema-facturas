@@ -3,67 +3,50 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import InvoicePreview from "../components/InvoicePreview";
+import { useFacturas } from "../hooks/useFacturas";
 
 import FacturaForm from "../components/FacturaForm";
 import { useToast } from "../context/ToastContext";
 
 function NuevaFactura() {
 
+  const { crearFactura } = useFacturas();
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   const [estado, setEstado] = useState("Pendiente");
   const [loading, setLoading] = useState(false);
+  const [cliente, setCliente] = useState("");
 
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const [cliente, setCliente] = useState("");
-
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
 
   e.preventDefault();
-
-  if (titulo.trim().length < 5) {
-
-    showToast(
-      "El título debe tener al menos 5 caracteres",
-      "error"
-    );
-
-    return;
-  }
-
-  if (descripcion.trim().length < 10) {
-
-    showToast(
-      "La descripción debe tener al menos 10 caracteres",
-      "error"
-    );
-
-    return;
-  }
 
   setLoading(true);
 
   try {
 
-    console.log({
-      titulo,
-      descripcion,
-      estado,
-    });
+    await crearFactura({
 
-    await new Promise(
-      (resolve) =>
-        setTimeout(resolve, 1500)
-    );
+      cliente,
+
+      estado,
+
+      title: titulo,
+
+      body: descripcion,
+
+    });
 
     showToast(
       "Factura creada correctamente",
       "success"
     );
 
+    setCliente("");
     setTitulo("");
     setDescripcion("");
     setEstado("Pendiente");
