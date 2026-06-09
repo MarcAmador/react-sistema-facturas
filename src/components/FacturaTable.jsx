@@ -31,7 +31,7 @@ function FacturaTable({ facturas, onDelete,onSort, sortField, sortDirection }) {
   };
 
   return (
-    <table className="table table-striped table-hover">
+    <table className="table table-striped table-hover table-sm text-nowrap">
 
       <thead>
 
@@ -95,29 +95,18 @@ function FacturaTable({ facturas, onDelete,onSort, sortField, sortDirection }) {
 
               </td>
 
-              <td>
-
-                <Link
-                  to={`/facturas/${factura.id}`}
-                  className="btn btn-primary btn-sm"
-                >
-                  <i className="bi bi-eye-fill"></i>
-                </Link>
-
-                <Link
-                  to={`/facturas/editar/${factura.id}`}
-                  className="btn btn-warning btn-sm mx-1"
-                >
-                  <i className="bi bi-pencil-fill"></i>
-                </Link>
-
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => onDelete(factura)}
-                >
-                  <i className="bi bi-trash-fill"></i>
-                </button>
-
+              <td className="text-nowrap">
+                <div className="d-flex gap-1">
+                  <Link to={`/facturas/${factura.id}`} className="btn btn-primary btn-sm">
+                    <i className="bi bi-eye-fill"></i>
+                  </Link>
+                  <Link to={`/facturas/editar/${factura.id}`} className="btn btn-warning btn-sm">
+                    <i className="bi bi-pencil-fill"></i>
+                  </Link>
+                  <button className="btn btn-danger btn-sm" onClick={() => onDelete(factura)}>
+                    <i className="bi bi-trash-fill"></i>
+                  </button>
+                </div>
               </td>
 
             </tr>
