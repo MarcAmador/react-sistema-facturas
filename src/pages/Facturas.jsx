@@ -196,6 +196,12 @@ function Facturas() {
           ]}
         />
 
+        <SearchBar 
+          searchTerm={searchTerm} 
+          setSearchTerm={setSearchTerm} 
+          setCurrentPage={setCurrentPage} 
+        />
+
         <div className="d-flex flex-column flex-md-row gap-2 gap-md-3 mb-3 align-items-start align-items-md-center">
           <strong>Filtrar por:</strong>
 

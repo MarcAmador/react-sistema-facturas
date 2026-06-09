@@ -80,6 +80,11 @@ export function FacturaProvider({
     nuevaFactura
   ) {
 
+    const nuevoId =
+    Math.max(
+      ...facturas.map(f => f.id)
+    ) + 1;
+
     const response =
       await apiCrearFactura(
         nuevaFactura
@@ -89,7 +94,7 @@ export function FacturaProvider({
 
       ...nuevaFactura,
 
-      id: Date.now(),
+      id: nuevoId,
 
     };
 
@@ -123,37 +128,25 @@ export function FacturaProvider({
     datosActualizados
   ) {
 
-    await apiActualizarFactura(
-      id,
-      datosActualizados
-    );
+    if (Number(id) <= 100) {
 
-    setFacturas((prev) => {
+      await apiActualizarFactura(
+        id,
+        datosActualizados
+      );
 
-    const actualizadas =
-        prev.map((factura) =>
+    }
 
+    setFacturas((prev) =>
+      prev.map((factura) =>
         factura.id === Number(id)
-
-            ? {
-                ...factura,
-                ...datosActualizados,
+          ? {
+              ...factura,
+              ...datosActualizados,
             }
-
-            : factura
-
-        );
-
-    localStorage.setItem(
-        "facturas",
-        JSON.stringify(
-        actualizadas
-        )
+          : factura
+      )
     );
-
-    return actualizadas;
-
-    });
 
   }
 
@@ -161,7 +154,11 @@ export function FacturaProvider({
     id
   ) {
 
-    await apiEliminarFactura(id);
+    if (Number(id) <= 100) {
+
+      await apiEliminarFactura(id);
+
+    }
 
     setFacturas((prev) => {
 
