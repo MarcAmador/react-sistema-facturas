@@ -1,7 +1,7 @@
-import { useState } from "react";
+// 1. ImportamosuseMemo y useCallback de React
+import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
-import EmptyState from "../components/EmptyState";
 import Pagination from "../components/Pagination";
 import DeleteModal from "../components/DeleteModal";
 import Breadcrumb from "../components/Breadcrumb";
@@ -13,14 +13,12 @@ import { useToast } from "../context/ToastContext";
 import SearchBar from "../components/SearchBar";
 
 function Facturas() {
-
-  const { facturas, loading, error, eliminarFactura} = useFacturas();
+  const { facturas, loading, error, eliminarFactura } = useFacturas();
 
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
 
   const [facturaSeleccionada, setFacturaSeleccionada] = useState(null);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [estadoFiltro, setEstadoFiltro] = useState("Todos");
   const [sortField, setSortField] = useState("id");
@@ -28,171 +26,94 @@ function Facturas() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  if (loading) {
-    return (
-      <LoadingSpinner
-        message="Cargando facturas..."
-      />
-    );
-  }
-
-  if (error) {
-    return (
-      <ErrorMessage
-        message={error}
-      />
-    );
-  }
-
-  const facturasFiltradas =
-    facturas.filter((factura) => {
-
+  // ==========================================
+  // OPTIMIZACIÓN 1: useMemo para el filtrado
+  // ==========================================
+  const facturasFiltradas = useMemo(() => {
+    return facturas.filter((factura) => {
       const coincideBusqueda =
-
-        factura.cliente
-          .toLowerCase()
-          .includes(
-            searchTerm.toLowerCase()
-          )
-
-        ||
-
-        factura.id
-          .toString()
-          .includes(searchTerm);
+        factura.cliente.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        factura.id.toString().includes(searchTerm);
 
       const coincideEstado =
-        estadoFiltro === "Todos"
-          ? true
-          : factura.estado ===
-            estadoFiltro;
+        estadoFiltro === "Todos" ? true : factura.estado === estadoFiltro;
 
-      return (
-        coincideBusqueda &&
-        coincideEstado
-      );
-
+      return coincideBusqueda && coincideEstado;
     });
+  }, [facturas, searchTerm, estadoFiltro]); // Solo se recalcula si cambia la API, la búsqueda o el filtro de radio button
 
-  const facturasOrdenadas =
-    [...facturasFiltradas].sort(
-      (a, b) => {
+  // ==========================================
+  // OPTIMIZACIÓN 2: useMemo para el ordenamiento
+  // ==========================================
+  const facturasOrdenadas = useMemo(() => {
+    return [...facturasFiltradas].sort((a, b) => {
+      let valueA = a[sortField];
+      let valueB = b[sortField];
 
-        let valueA =
-          a[sortField];
-
-        let valueB =
-          b[sortField];
-
-        if (
-          typeof valueA === "string"
-        ) {
-
-          valueA =
-            valueA.toLowerCase();
-
-          valueB =
-            valueB.toLowerCase();
-
-        }
-
-        if (valueA < valueB) {
-
-          return sortDirection === "asc"
-            ? -1
-            : 1;
-
-        }
-
-        if (valueA > valueB) {
-
-          return sortDirection === "asc"
-            ? 1
-            : -1;
-
-        }
-
-        return 0;
-
+      if (typeof valueA === "string") {
+        valueA = valueA.toLowerCase();
+        valueB = valueB.toLowerCase();
       }
-    );
 
-  const totalPages = Math.ceil(
-    facturasFiltradas.length /
-    itemsPerPage
-    );
+      if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
+      if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [facturasFiltradas, sortField, sortDirection]); // Solo se ordena si cambia el array filtrado o las columnas de ordenación
 
-    const handleDeleteClick = (factura) => {
+  // Cálculo simple basado en el valor ya memorizado
+  const totalPages = Math.ceil(facturasFiltradas.length / itemsPerPage);
 
+  // ==========================================
+  // OPTIMIZACIÓN 3: useMemo para la paginación activa
+  // ==========================================
+  const currentFacturas = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return facturasOrdenadas.slice(startIndex, endIndex);
+  }, [facturasOrdenadas, currentPage]); // Solo corta el array si cambia el orden o nos movemos de página
+
+  // ==========================================
+  // OPTIMIZACIÓN 4: useCallback para funciones
+  // ==========================================
+  const handleDeleteClick = useCallback((factura) => {
     setFacturaSeleccionada(factura);
-
     setShowModal(true);
+  }, []); // Array vacío porque las funciones de cambio de estado (setters) son estables por naturaleza
 
-  };
-
-  const handleDelete = async () => {
-
-    await eliminarFactura(
-      facturaSeleccionada.id
-    );
-
-    showToast(
-      "Factura eliminada",
-      "success"
-    );
-
+  const handleDelete = useCallback(async () => {
+    if (!facturaSeleccionada) return;
+    
+    await eliminarFactura(facturaSeleccionada.id);
+    showToast("Factura eliminada", "success");
     setShowModal(false);
+  }, [eliminarFactura, facturaSeleccionada, showToast]); // Se congela a menos que cambie la factura seleccionada o el servicio
 
-  };
+  const handleSort = useCallback((field) => {
+    setSortField((prevField) => {
+      if (prevField === field) {
+        // Usamos la versión de callback funcional del setter para evitar depender de sortDirection en el array de dependencias
+        setSortDirection((prevDirection) => (prevDirection === "asc" ? "desc" : "asc"));
+        return prevField;
+      } else {
+        setSortDirection("asc");
+        return field;
+      }
+    });
+  }, []); // Al usar prevField y prevDirection, esta función nunca se vuelve a recrear. ¡Máxima eficiencia!
 
-  const handleSort = (field) => {
+  // Renders de carga y error (se mantienen abajo por legibilidad)
+  if (loading) return <LoadingSpinner message="Cargando facturas..." />;
+  if (error) return <ErrorMessage message={error} />;
 
-    if (sortField === field) {
-
-      setSortDirection(
-        sortDirection === "asc"
-          ? "desc"
-          : "asc"
-      );
-
-    } else {
-
-      setSortField(field);
-
-      setSortDirection("asc");
-
-    }
-
-  };
-
-  const startIndex =
-    (currentPage - 1) *
-    itemsPerPage;
-
-  const endIndex =
-    startIndex + itemsPerPage;
-
-  const currentFacturas =
-    facturasOrdenadas.slice(
-      startIndex,
-      endIndex
-    );
-  
   return (
     <div className="card">
-
       <div className="card-body">
-
         <h1>Listado de Facturas</h1>
         <Breadcrumb
           items={[
-            {
-              label: "Inicio",
-              path: "/dashboard",
-            },
-            {
-              label: "Facturas",
-            },
+            { label: "Inicio", path: "/dashboard" },
+            { label: "Facturas" },
           ]}
         />
 
@@ -244,7 +165,6 @@ function Facturas() {
             sortDirection={sortDirection}
           />
         </div>
-
       </div>
 
       <Pagination
@@ -254,14 +174,12 @@ function Facturas() {
       />
 
       <DeleteModal
-      show={showModal}
-      onClose={() => setShowModal(false)}
-      onConfirm={handleDelete}
-    />
-
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleDelete}
+      />
     </div>
   );
-
 }
 
 export default Facturas;
