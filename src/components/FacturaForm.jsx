@@ -216,15 +216,19 @@ const validate = () => {
         disabled={loading}
       >
 
-        {loading && (
+      {loading ? (
 
+        <>
           <span
             className="spinner-border spinner-border-sm me-2"
           ></span>
 
-        )}
+          Guardando...
+        </>
 
-        {textoBoton}
+      ) : (
+        textoBoton
+      )}
 
       </button>
     </div>
