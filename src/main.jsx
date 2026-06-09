@@ -3,12 +3,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 //BrowserRouter para manejar las rutas de la app
-import { BrowserRouter } from "react-router-dom";
+//import { BrowserRouter } from "react-router-dom";
 
 //Proveedor del contexto de autenticación
 import { AuthProvider } from "./context/AuthContext.jsx";
 import {ToastProvider} from "./context/ToastContext";
 import { FacturaProvider } from "./context/FacturaContext.jsx";
+import { HashRouter } from 'react-router-dom';
 
 //Importar el componente principal de la app
 import App from "./App.jsx";
@@ -30,7 +31,7 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
 
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
 
       <ToastProvider>
 
@@ -46,7 +47,7 @@ createRoot(document.getElementById("root")).render(
 
       </ToastProvider>
 
-    </BrowserRouter>
+    </HashRouter>
 
   </StrictMode>
 );
