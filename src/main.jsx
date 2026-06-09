@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 //Proveedor del contexto de autenticación
 import { AuthProvider } from "./context/AuthContext.jsx";
 import {ToastProvider} from "./context/ToastContext";
+import { FacturaProvider } from "./context/FacturaContext.jsx";
 
 //Importar el componente principal de la app
 import App from "./App.jsx";
@@ -28,13 +29,24 @@ import "./index.css";
 //Renderizado de la app, envuelta en BrowserRouter para manejar las rutas
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/*Añadimos el basename aquí para la configuración de GitHub Pages*/}
-    <BrowserRouter basename={import.meta.env.BASE_URL}> 
+
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+
       <ToastProvider>
+
         <AuthProvider>
-          <App />
+
+          <FacturaProvider>
+
+            <App />
+
+          </FacturaProvider>
+
         </AuthProvider>
+
       </ToastProvider>
+
     </BrowserRouter>
+
   </StrictMode>
 );
