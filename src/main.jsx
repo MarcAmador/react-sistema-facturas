@@ -16,6 +16,13 @@ import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+// ... tus otras importaciones
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+// ¡AÑADE ESTA LÍNEA PARA QUE EL MENÚ PUEDA ABRIRSE!
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
+import "./index.css";
+// ... resto de tu código
 import "./index.css";
 
 //Renderizado de la app, envuelta en BrowserRouter para manejar las rutas
