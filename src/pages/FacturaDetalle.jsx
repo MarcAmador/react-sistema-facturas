@@ -115,6 +115,10 @@ function FacturaDetalle() {
         </p>
 
         <p>
+          <strong>Título:</strong> {factura.title}
+        </p>
+
+        <p>
           <strong>Estado:</strong>{" "}
 
           <span

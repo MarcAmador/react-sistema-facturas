@@ -190,121 +190,48 @@ function Facturas() {
           ]}
         />
 
-      <div className="d-flex flex-wrap align-items-center justify-content-between mb-4">
-            <SearchBar
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              setCurrentPage={setCurrentPage}
-            />
+        <div className="d-flex flex-column flex-md-row gap-2 gap-md-3 mb-3 align-items-start align-items-md-center">
+          <strong>Filtrar por:</strong>
 
-            {/* Filtro por estado de factura */}
-            <div className="mb-3 d-flex gap-4 flex-wrap">
+          <div className="form-check">
+            <input className="form-check-input" type="radio" checked={estadoFiltro === "Todos"} onChange={() => setEstadoFiltro("Todos")} />
+            <label className="form-check-label">Todos</label>
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={
-                    estadoFiltro === "Todos"
-                  }
-                  onChange={() =>
-                    setEstadoFiltro("Todos")
-                  }
-                />
-                <label className="form-check-label">
-                  Todos
-                </label>
-              </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" checked={estadoFiltro === "Pendiente"} onChange={() => setEstadoFiltro("Pendiente")} />
+            <label className="form-check-label">Pendientes</label>
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={
-                    estadoFiltro === "Pagada"
-                  }
-                  onChange={() =>
-                    setEstadoFiltro("Pagada")
-                  }
-                />
-                <label className="form-check-label">
-                  Pagadas
-                </label>
-              </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" checked={estadoFiltro === "Pagada"} onChange={() => setEstadoFiltro("Pagada")} />
+            <label className="form-check-label">Pagadas</label>
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={
-                    estadoFiltro === "Pendiente"
-                  }
-                  onChange={() =>
-                    setEstadoFiltro("Pendiente")
-                  }
-                />
-                <label className="form-check-label">
-                  Pendientes
-                </label>
-              </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" checked={estadoFiltro === "Vencida"} onChange={() => setEstadoFiltro("Vencida")} />
+            <label className="form-check-label">Vencidas</label>
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={
-                    estadoFiltro === "Vencida"
-                  }
-                  onChange={() =>
-                    setEstadoFiltro("Vencida")
-                  }
-                />
-                <label className="form-check-label">
-                  Vencidas
-                </label>
-              </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" checked={estadoFiltro === "Anulada"} onChange={() => setEstadoFiltro("Anulada")} />
+            <label className="form-check-label">Anuladas</label>
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={
-                    estadoFiltro === "Anulada"
-                  }
-                  onChange={() =>
-                    setEstadoFiltro("Anulada")
-                  }
-                />
-                <label className="form-check-label">
-                  Anuladas
-                </label>
-              </div>
-
-            </div>
-
-            {/* Limpiar Filtros */}
-            <button
-              className="btn btn-outline-secondary btn-sm mb-3"
-              onClick={() => {
-
-                setSearchTerm("");
-
-                setEstadoFiltro(
-                  "Todos"
-                );
-
-              }}
-            >
-              Limpiar filtros
-            </button>
+          <button className="btn btn-outline-secondary btn-sm mt-2 mt-md-0" onClick={() => { setSearchTerm(""); setEstadoFiltro("Todos"); }}>
+            Limpiar filtros
+          </button>
         </div>
-        <FacturaTable
-          facturas={currentFacturas}
-          onDelete = {handleDeleteClick}
-          onSort = {handleSort}
-          sortField = {sortField}
-          sortDirection = {sortDirection}
-        />
+
+        <div className="table-responsive">
+          <FacturaTable
+            facturas={currentFacturas}
+            onDelete={handleDeleteClick}
+            onSort={handleSort}
+            sortField={sortField}
+            sortDirection={sortDirection}
+          />
+        </div>
 
       </div>
 
