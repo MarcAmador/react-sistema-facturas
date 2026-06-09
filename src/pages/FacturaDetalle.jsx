@@ -9,6 +9,7 @@ import { useFacturas } from "../hooks/useFacturas";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Toast from "../components/Toasts";
 import { useToast } from "../context/ToastContext";
+import InvoicePreview from "../components/InvoicePreview";
 
 function FacturaDetalle() {
 
@@ -96,47 +97,15 @@ function FacturaDetalle() {
 
       <div className="card-body">
 
-      <h1 className="mb-4">
-        <i className="bi bi-receipt me-2"></i>
-        Factura #{factura.id}
-      </h1>
-
-        <p>
-          <strong>ID:</strong> {factura.id}
-        </p>
-
-        <p>
-          <strong>Cliente:</strong>{" "}
-          {factura.cliente}
-        </p>
-
-        <p>
-          <strong>Título:</strong> {factura.title}
-        </p>
-
-        <p>
-          <strong>Estado:</strong>{" "}
-
-          <span
-            className={`badge px-3 py-2 ${
-              factura.estado === "Pagada"
-                ? "bg-success"
-                : factura.estado === "Pendiente"
-                ? "bg-warning text-dark"
-                : factura.estado === "Vencida"
-                ? "bg-danger"
-                : "bg-secondary"
-            }`}
-          >
-            {factura.estado}
-          </span>
-        </p>
-
-        <p>
-          <strong>Contenido:</strong>
-        </p>
-
-        <p>{factura.body}</p>
+      <InvoicePreview
+        factura={{
+          id: factura.id,
+          cliente: factura.cliente,
+          titulo: factura.title,
+          descripcion: factura.body,
+          estado: factura.estado,
+        }}
+      />
 
       </div>
 
