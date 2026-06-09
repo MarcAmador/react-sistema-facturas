@@ -1,12 +1,9 @@
-
 function SearchBar({ searchTerm, setSearchTerm, setCurrentPage }) {
   return (
-    <div className="mb-3">
-
+    <div className="mb-3 w-100">
       <input
         type="text"
-        className="form-control"
-        style={{ minWidth: "450px" }}
+        className="form-control w-100"
         placeholder="Buscar cliente o ID"
         value={searchTerm}
         onChange={(e) => {
@@ -14,7 +11,6 @@ function SearchBar({ searchTerm, setSearchTerm, setCurrentPage }) {
           setCurrentPage(1);
         }}
       />
-
     </div>
   );
 }
