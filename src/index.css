@@ -1,247 +1,118 @@
-
-
 .pagination .page-link {
   border-radius: 50px !important;
   margin: 0 3px;
 }
 
 .custom-toast {
-
   position: fixed;
-
   top: 30px;
   left: 50%;
-
   transform: translateX(-50%);
-
   z-index: 9999;
-
   min-width: 300px;
-
   padding: 15px 25px;
-
   border-radius: 12px;
-
   text-align: center;
-
   font-weight: 500;
-
   color: white;
-
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.2);
-
-  animation:
-    slideDown 0.5s ease,
-    slideUp 0.5s ease 2.5s forwards;
-
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  animation: slideDown 0.5s ease, slideUp 0.5s ease 2.5s forwards;
 }
 
-.toast-success {
-
-  background-color: #198754;
-
-}
-
-.toast-error {
-
-  background-color: #dc3545;
-
-}
+.toast-success { background-color: #198754; }
+.toast-error { background-color: #dc3545; }
 
 @keyframes slideDown {
-
   from {
-
     opacity: 0;
-
-    transform:
-      translateX(-50%)
-      translateY(-100px);
-
+    transform: translateX(-50%) translateY(-100px);
   }
-
   to {
-
     opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(0);
-
+    transform: translateX(-50%) translateY(0);
   }
-
 }
 
 @keyframes slideUp {
-
   from {
-
     opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(0);
-
+    transform: translateX(-50%) translateY(0);
   }
-
   to {
-
     opacity: 0;
-
-    transform:
-      translateX(-50%)
-      translateY(-100px);
-
+    transform: translateX(-50%) translateY(-100px);
   }
-
 }
 
 .invoice-paper {
-
   background: white;
-
   max-width: 850px;
-
   margin: auto;
-
   border-radius: 12px 12px 0 0;
-
   overflow: visible;
-
   filter: drop-shadow(0px -30px 80px rgba(0,0,0,.18));
-  
 }
 
 .invoice-header {
-
-  background:
-  linear-gradient(
-    135deg,
-    #0d6efd,
-    #0a58ca
-  );
-
+  background: linear-gradient(135deg, #0d6efd, #0a58ca);
   color: white;
-
   padding: 25px;
-
 }
 
-.invoice-body {
-
-  padding: 30px;
-
-}
+.invoice-body { padding: 30px; }
 
 .invoice-footer {
-
   background: #f8f9fa;
-
   padding: 20px;
-
   text-align: center;
-
   color: #6c757d;
-
   position: relative;
-
 }
 
 .invoice-cut {
-
   height: 20px;
-
-  background:
-    linear-gradient(
-      -45deg,
-      transparent 10px,
-      white 0
-    ),
-    linear-gradient(
-      45deg,
-      transparent 10px,
-      white 0
-    );
-
+  background: 
+    linear-gradient(-45deg, transparent 10px, white 0),
+    linear-gradient(45deg, transparent 10px, white 0);
   background-size: 20px 20px;
-
   background-repeat: repeat-x;
-
-  filter:
-    drop-shadow(
-      0 6px 6px
-      rgba(0,0,0,.15)
-    );
-
+  filter: drop-shadow(0 6px 6px rgba(0,0,0,.15));
 }
 
-/* ---- AJUSTES GLOBALES PARA MÓVILES ---- */
 @media (max-width: 767.98px) {
-  
-  /* 1. Reduce el tamaño de fuente general del sistema */
-  body {
-    font-size: 0.875rem; /* ~14px en lugar de los 16px por defecto */
-  }
-
-  /* 2. Hace que los títulos sean un poco más pequeños */
+  body { font-size: 0.875rem; }
   h1 { font-size: 1.5rem; }
   h2 { font-size: 1.25rem; }
   
-  /* 3. Reduce el padding de todos los botones para que no ocupen tanto espacio */
   .btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
   }
 
-  /* 4. Hace que las celdas de la tabla sean más estrechas (compactas) */
   .table td, .table th {
     padding: 0.5rem;
     font-size: 0.85rem;
   }
 
-  /* 5. Asegura que el buscador no se desborde */
-  .form-control {
-    font-size: 0.875rem;
-  }
+  .form-control { font-size: 0.875rem; }
 }
 
-button,
-.btn,
-.card,
-.form-control,
-.form-select {
+button, .btn, .card, .form-control, .form-select {
   transition: all 0.25s ease;
 }
 
 .card {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
+.card:hover { transform: translateY(-2px); }
+.btn:hover { transform: translateY(-1px); }
 
 .dashboard-card {
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .dashboard-card:hover {
-
   transform: translateY(-4px);
-
-  box-shadow:
-    0 8px 20px
-    rgba(0,0,0,.12);
-
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
 }

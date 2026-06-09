@@ -1,9 +1,9 @@
 function Pagination({ currentPage, totalPages, onPageChange }) {
-  // 1. Lógica para determinar qué 3 páginas mostrar
+  if (totalPages <= 1) return null;
+
   let startPage = Math.max(1, currentPage - 1);
   let endPage = Math.min(totalPages, currentPage + 1);
 
-  // Ajustes para los extremos (si estamos en la página 1 o en la última)
   if (currentPage === 1) {
     endPage = Math.min(totalPages, 3);
   } else if (currentPage === totalPages) {
@@ -15,15 +15,9 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     visiblePages.push(i);
   }
 
-  // 2. Si no hay páginas o solo hay 1, no mostramos la paginación
-  if (totalPages <= 1) return null;
-
   return (
     <nav className="mt-4">
-      {/* Añadimos pagination-sm para que se vea bien en teléfonos */}
       <ul className="pagination pagination-sm justify-content-center">
-        
-        {/* Botón PRIMERO */}
         <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <button
             className="page-link"
@@ -34,18 +28,16 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           </button>
         </li>
 
-        {/* Botón ANTERIOR */}
         <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <button
             className="page-link"
             onClick={() => onPageChange(currentPage - 1)}
             aria-label="Anterior"
           >
-             <i className="bi bi-chevron-left"></i>
+            <i className="bi bi-chevron-left"></i>
           </button>
         </li>
 
-        {/* NÚMEROS DE PÁGINA (Máximo 3) */}
         {visiblePages.map((page) => (
           <li
             key={page}
@@ -57,18 +49,16 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           </li>
         ))}
 
-        {/* Botón SIGUIENTE */}
         <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
           <button
             className="page-link"
             onClick={() => onPageChange(currentPage + 1)}
             aria-label="Siguiente"
           >
-             <i className="bi bi-chevron-right"></i>
+            <i className="bi bi-chevron-right"></i>
           </button>
         </li>
 
-        {/* Botón ÚLTIMO */}
         <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
           <button
             className="page-link"
@@ -78,7 +68,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             <i className="bi bi-chevron-double-right"></i>
           </button>
         </li>
-
       </ul>
     </nav>
   );

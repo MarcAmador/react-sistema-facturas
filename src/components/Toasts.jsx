@@ -1,38 +1,26 @@
-function Toast({
-  message,
-  type = "success",
-}) {
+function Toast({ message, type = "success" }) {
+  const toastConfig = {
+    success: {
+      className: "toast-success",
+      icon: "bi-check-circle-fill",
+    },
+    error: {
+      className: "toast-error",
+      icon: "bi-x-circle-fill",
+    },
+    info: {
+      className: "toast-info",
+      icon: "bi-info-circle-fill",
+    },
+  };
 
-  let icon = "bi-check-circle-fill";
-
-  if (type === "error") {
-    icon = "bi-x-circle-fill";
-  }
-
-  if (type === "info") {
-    icon = "bi-info-circle-fill";
-  }
+  const currentConfig = toastConfig[type] || toastConfig.success;
 
   return (
-
-    <div
-      className={`custom-toast ${
-        type === "success"
-          ? "toast-success"
-          : type === "error"
-          ? "toast-error"
-          : "toast-info"
-      }`}
-    >
-
-      <i
-        className={`${icon} me-2`}
-      ></i>
-
+    <div className={`custom-toast ${currentConfig.className}`}>
+      <i className={`bi ${currentConfig.icon} me-2`}></i>
       {message}
-
     </div>
-
   );
 }
 

@@ -5,34 +5,30 @@ function Dashboard() {
   const { facturas } = useFacturas();
   const totalFacturas = facturas.length;
 
-  // Métricas
   const pendientes = facturas.filter((f) => f.estado === "Pendiente").length;
   const pagadas = facturas.filter((f) => f.estado === "Pagada").length;
   const vencidas = facturas.filter((f) => f.estado === "Vencida").length;
 
-  // Clonamos e invertimos para obtener verdaderamente las LATEST invoices
   const ultimasFacturas = [...facturas].reverse().slice(0, 5);
 
-  // Protección contra división por cero
   const porcentajePagadas = totalFacturas > 0 ? (pagadas / totalFacturas) * 100 : 0;
   const porcentajePendientes = totalFacturas > 0 ? (pendientes / totalFacturas) * 100 : 0;
   const porcentajeVencidas = totalFacturas > 0 ? (vencidas / totalFacturas) * 100 : 0;
 
-  // Función helper para pintar los Badges de la tabla
   const getBadgeClass = (estado) => {
-    if (estado === "Pagada") return "bg-success-subtle text-success border border-success-subtle";
-    if (estado === "Pendiente") return "bg-warning-subtle text-warning-emphasis border border-warning-subtle";
-    if (estado === "Vencida") return "bg-danger-subtle text-danger border border-danger-subtle";
-    return "bg-secondary-subtle text-secondary";
+    const classes = {
+      Pagada: "bg-success-subtle text-success border border-success-subtle",
+      Pendiente: "bg-warning-subtle text-warning-emphasis border border-warning-subtle",
+      Vencida: "bg-danger-subtle text-danger border border-danger-subtle"
+    };
+    return classes[estado] || "bg-secondary-subtle text-secondary";
   };
 
   return (
     <div className="container py-2">
       <h2 className="mb-4 fw-bold text-dark">Panel de Control</h2>
 
-      {/* 1. SECCIÓN DE TARJETAS (Métricas Superiores de forma horizontal) */}
       <div className="row g-3 mb-4">
-        {/* Total */}
         <div className="col-12 col-sm-6 col-md-3">
           <div className="card h-100 border-0 border-start border-primary border-4 shadow-sm">
             <div className="card-body d-flex align-items-center justify-content-between">
@@ -47,7 +43,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Pagadas */}
         <div className="col-12 col-sm-6 col-md-3">
           <div className="card h-100 border-0 border-start border-success border-4 shadow-sm">
             <div className="card-body d-flex align-items-center justify-content-between">
@@ -62,7 +57,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Pendientes */}
         <div className="col-12 col-sm-6 col-md-3">
           <div className="card h-100 border-0 border-start border-warning border-4 shadow-sm">
             <div className="card-body d-flex align-items-center justify-content-between">
@@ -77,7 +71,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Vencidas */}
         <div className="col-12 col-sm-6 col-md-3">
           <div className="card h-100 border-0 border-start border-danger border-4 shadow-sm">
             <div className="card-body d-flex align-items-center justify-content-between">
@@ -93,9 +86,7 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* 2. DISTRIBUCIÓN PRINCIPAL (Dos columnas para Desktop) */}
       <div className="row g-4">
-        {/* Columna Izquierda: Tabla principal (Ancha) */}
         <div className="col-12 col-lg-8">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-body p-4">
@@ -139,10 +130,7 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Columna Derecha: Estado de progreso y Accesos Rápidos (Lateral) */}
         <div className="col-12 col-lg-4 d-flex flex-column gap-4">
-          
-          {/* Barra de Progreso Colectiva */}
           <div className="card border-0 shadow-sm">
             <div className="card-body p-4">
               <h5 className="fw-bold mb-3">Balance de Estados</h5>
@@ -171,7 +159,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Panel de Acciones Rápidas */}
           <div className="card border-0 shadow-sm flex-grow-1">
             <div className="card-body p-4 d-flex flex-column justify-content-between">
               <div>
@@ -188,7 +175,6 @@ function Dashboard() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

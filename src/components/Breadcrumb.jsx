@@ -3,37 +3,21 @@ import { Link } from "react-router-dom";
 function Breadcrumb({ items }) {
   return (
     <nav aria-label="breadcrumb">
-
       <ol className="breadcrumb">
-
-        {items.map((item, index) => {
-
-          const ultimo =
-            index === items.length - 1;
-
-          return (
-            <li
-              key={index}
-              className={`breadcrumb-item ${
-                ultimo ? "active" : ""
-              }`}
-            >
-
-              {ultimo ? (
-                item.label
-              ) : (
-                <Link to={item.path}>
-                  {item.label}
-                </Link>
-              )}
-
-            </li>
-          );
-
-        })}
-
+        {items.map((item, index) => (
+          <li
+            key={index}
+            className={`breadcrumb-item ${index === items.length - 1 ? "active" : ""}`}
+            aria-current={index === items.length - 1 ? "page" : undefined}
+          >
+            {index === items.length - 1 ? (
+              item.label
+            ) : (
+              <Link to={item.path}>{item.label}</Link>
+            )}
+          </li>
+        ))}
       </ol>
-
     </nav>
   );
 }

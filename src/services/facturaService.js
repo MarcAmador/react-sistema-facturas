@@ -1,17 +1,13 @@
-// src/services/facturaService.js
 import api from "./api";
-// 1. Importamos la función transformadora desde utilidades
-import { transformarFactura } from "../utils/generadorClientes"; 
+import { transformarFactura } from "../utils/generadorClientes";
 
 export async function obtenerFacturas() {
   const response = await api.get("/posts");
-  // Mapeamos el arreglo transformando cada elemento
   return response.data.map(transformarFactura);
 }
 
 export async function obtenerFacturaPorId(id) {
   const response = await api.get(`/posts/${id}`);
-  // Transformamos el objeto único recibido
   return transformarFactura(response.data);
 }
 
