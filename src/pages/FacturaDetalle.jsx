@@ -30,23 +30,31 @@ function FacturaDetalle() {
 
   const handleDelete = async () => {
 
-    await eliminarFactura(
-      factura.id
-    );
+    try{
 
-    showToast(
-      "Factura eliminada correctamente",
-      "success"
-    );
+      await eliminarFactura(
+        factura.id
+      );
+  
+      showToast(
+        "Factura eliminada correctamente",
+        "success"
+      );
+  
+      setShowModal(false);
+  
+      setTimeout(() => {
+  
+        navigate("/facturas");
+  
+      }, 1000);
+    } catch {
 
-    setShowModal(false);
-
-    setTimeout(() => {
-
-      navigate("/facturas");
-
-    }, 1000);
-
+      showToast(
+        "No se pudo eliminar la factura",
+        "danger"
+      )
+    }
   };
 
   useEffect(() => {

@@ -57,6 +57,10 @@ const handleSubmit = async (e) => {
 
     }, 1000);
 
+  } catch{
+    showToast(
+      "No se pudo crear la factura", "danger"
+    )
   } finally {
 
     setLoading(false);

@@ -83,6 +83,13 @@ function EditarFactura() {
 
         navigate(`/facturas/${id}`);
 
+      }catch {
+
+        showToast(
+          "No se pudo actualizar la factura",
+          "danger"
+        )
+
       } finally {
 
         setLoadingSave(false);
