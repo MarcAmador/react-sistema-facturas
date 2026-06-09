@@ -71,7 +71,7 @@ function Navbar() {
               <li className="nav-item">
                 <button 
                   className="nav-link text-start bg-transparent border-0 w-100" 
-                  onClick={() => navigate('/nueva-factura')} 
+                  onClick={() => navigate('/facturas/nueva')} 
                   data-bs-dismiss="offcanvas"
                   data-bs-target="#sidebarMenu"
                 >
