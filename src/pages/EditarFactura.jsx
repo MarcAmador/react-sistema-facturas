@@ -8,6 +8,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import { useFacturas } from "../hooks/useFacturas";
 import FacturaForm from "../components/FacturaForm";
 import LoadingSpinner from "../components/LoadingSpinner";
+import InvoicePreview from "../components/InvoicePreview";
 
 function EditarFactura() {
 
@@ -24,6 +25,7 @@ function EditarFactura() {
   const { showToast } = useToast();
 
   const {facturas, editarFactura,} = useFacturas();
+  const [loadingSave, setLoadingSave] = useState(false);
 
   const navigate = useNavigate();
 
@@ -59,35 +61,35 @@ function EditarFactura() {
 
     }, [id, facturas]);
 
-  const handleSubmit =
-    async (e) => {
+    const handleSubmit = async (e) => {
 
       e.preventDefault();
 
-      await editarFactura(
-        id,
-        {
+      setLoadingSave(true);
+
+      try {
+
+        await editarFactura(id, {
           cliente,
           estado,
           title: titulo,
           body: descripcion,
-        }
-      );
+        });
 
-      showToast(
-        "Factura actualizada correctamente",
-        "success"
-      );
-
-      setTimeout(() => {
-
-        navigate(
-          `/facturas/${id}`
+        showToast(
+          "Factura actualizada correctamente",
+          "success"
         );
 
-      }, 1000);
+        navigate(`/facturas/${id}`);
 
-  };
+      } finally {
+
+        setLoadingSave(false);
+
+      }
+
+    };
 
   if (loading) {
     return (
@@ -140,7 +142,18 @@ function EditarFactura() {
           onTituloChange={setTitulo}
           onDescripcionChange={setDescripcion}
           onSubmit={handleSubmit}
+          loading={loadingSave}
           textoBoton="Actualizar"
+        />
+
+        <InvoicePreview
+          factura={{
+            id,
+            cliente,
+            titulo,
+            descripcion,
+            estado,
+          }}
         />
 
       </div>
