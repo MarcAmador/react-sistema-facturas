@@ -19,7 +19,7 @@ function App() {
         <Route path="/facturas" element={<PrivateRoute><Facturas /></PrivateRoute>} />
         <Route path="/facturas/nueva" element={<PrivateRoute><NuevaFactura /></PrivateRoute>} />
         <Route path="/facturas/:id" element={<PrivateRoute><DetalleFactura /></PrivateRoute>} />
-        <Route path="/facturas/:id/editar" element={<PrivateRoute><EditarFactura /></PrivateRoute>} />
+        <Route path="/facturas/editar/:id" element={<PrivateRoute><EditarFactura /></PrivateRoute>} />
       </Routes>
     </MainLayout>
   );
