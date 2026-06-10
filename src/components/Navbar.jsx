@@ -39,11 +39,13 @@ function Navbar() {
             <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
           </div>
 
-          <div className="offcanvas-body d-flex flex-column flex-lg-row w-100 justify-content-between">
-            <ul className="navbar-nav flex-row flex-wrap pt-2 pt-lg-0">
-              <li className="nav-item col-6 col-lg-auto">
+          {/* Se remueven las clases flex generales de este contenedor para móviles */}
+          <div className="offcanvas-body d-lg-flex justify-content-lg-between align-items-lg-center">
+            
+            <ul className="navbar-nav d-flex flex-column flex-lg-row gap-2 gap-lg-0 mb-2 mb-lg-0">
+              <li className="nav-item">
                 <button 
-                  className="nav-link text-start bg-transparent border-0 w-100" 
+                  className="nav-link text-start bg-transparent border-0 w-100 d-flex align-items-center" 
                   onClick={() => navigate("/dashboard")} 
                   data-bs-dismiss="offcanvas"
                   data-bs-target="#sidebarMenu"
@@ -51,19 +53,19 @@ function Navbar() {
                   <span className="d-lg-none"><i className="bi bi-house-door-fill me-3"></i></span>Dashboard
                 </button>
               </li>
-              <li className="nav-item col-6 col-lg-auto">
+              <li className="nav-item">
                 <button 
-                  className="nav-link text-start bg-transparent border-0 w-100" 
+                  className="nav-link text-start bg-transparent border-0 w-100 d-flex align-items-center" 
                   onClick={() => navigate("/facturas")} 
                   data-bs-dismiss="offcanvas"
                   data-bs-target="#sidebarMenu"
                 >
-                  <span className="d-lg-none"><i className="bi bi-receipt-cutoff me-3"></i></span>Facturas
+                  <span className="d-lg-none"><i className="bi bi-file-earmark-text-fill me-3"></i></span>Facturas
                 </button>
               </li>
-              <li className="nav-item col-6 col-lg-auto">
+              <li className="nav-item">
                 <button 
-                  className="nav-link text-start bg-transparent border-0 w-100" 
+                  className="nav-link text-start bg-transparent border-0 w-100 d-flex align-items-center" 
                   onClick={() => navigate("/facturas/nueva")} 
                   data-bs-dismiss="offcanvas"
                   data-bs-target="#sidebarMenu"
@@ -75,9 +77,10 @@ function Navbar() {
 
             <hr className="d-lg-none my-3 text-secondary" />
 
-            <div className="d-flex flex-column flex-lg-row gap-2 mt-auto mt-lg-0 pt-2 pt-lg-0 align-items-lg-center">
+            {/* Bloque de botones en flujo natural para pegarse arriba en móviles */}
+            <div className="d-flex flex-column flex-lg-row gap-2 align-items-lg-center">
               <button 
-                className="btn btn-warning btn-sm py-2 py-lg-1 w-100 w-lg-auto text-nowrap" 
+                className="btn btn-warning w-100 w-lg-auto text-nowrap py-2 py-lg-1" 
                 onClick={handleSessionExpired} 
                 data-bs-dismiss="offcanvas" 
                 data-bs-target="#sidebarMenu"
@@ -85,7 +88,7 @@ function Navbar() {
                 Simular 401
               </button>
               <button 
-                className="btn btn-outline-danger btn-sm py-2 py-lg-1 w-100 w-lg-auto text-nowrap" 
+                className="btn btn-outline-danger w-100 w-lg-auto text-nowrap py-2 py-lg-1" 
                 onClick={handleLogout} 
                 data-bs-dismiss="offcanvas" 
                 data-bs-target="#sidebarMenu"
